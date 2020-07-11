@@ -1,17 +1,13 @@
 <?php
 
-
 namespace Felix\Metadata;
-
 
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use IteratorAggregate;
-use Traversable;
 
 class Meta implements Countable, IteratorAggregate, ArrayAccess
 {
@@ -57,7 +53,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function count(): int
     {
@@ -72,7 +68,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getIterator(): ArrayIterator
     {
@@ -96,7 +92,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
      */
     public function get(string $key, $default = null)
     {
-        return Arr::get($this->all(), $this->prefix . $key, $default);
+        return Arr::get($this->all(), $this->prefix.$key, $default);
     }
 
     /**
@@ -107,12 +103,12 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     public function set(string $key, $value): self
     {
         $_ = $this->all();
-        Arr::set($_, $this->prefix . $key, $value);
+        Arr::set($_, $this->prefix.$key, $value);
         $this->model->update([
             'metadata' => json_encode(
                 $_,
                 JSON_THROW_ON_ERROR
-            )
+            ),
         ]);
 
         return $this;
@@ -121,7 +117,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     public function update(array $metadata): self
     {
         $this->model->update([
-            'metadata' => json_encode(array_merge($this->all(), $metadata), JSON_THROW_ON_ERROR)
+            'metadata' => json_encode(array_merge($this->all(), $metadata), JSON_THROW_ON_ERROR),
         ]);
 
         return $this;
@@ -138,7 +134,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
      */
     public function has($keys): bool
     {
-        return Arr::has($this->all(), array_map(fn($key) => $this->prefix . $key, Arr::wrap($keys)));
+        return Arr::has($this->all(), array_map(fn ($key) => $this->prefix.$key, Arr::wrap($keys)));
     }
 
     public function __unset($name)
@@ -153,7 +149,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     public function delete($keys): self
     {
         $_ = $this->all();
-        Arr::forget($_, array_map(fn($key) => $this->prefix . $key, Arr::wrap($keys)));
+        Arr::forget($_, array_map(fn ($key) => $this->prefix.$key, Arr::wrap($keys)));
 
         return $this->reset($_);
     }
@@ -161,14 +157,14 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     public function reset(array $with = []): self
     {
         $this->model->update([
-            'metadata' => json_encode($with, JSON_THROW_ON_ERROR)
+            'metadata' => json_encode($with, JSON_THROW_ON_ERROR),
         ]);
 
         return $this;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -176,7 +172,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -184,7 +180,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -192,7 +188,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {

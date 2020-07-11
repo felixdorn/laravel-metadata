@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Felix\Metadata;
-
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
