@@ -1,12 +1,10 @@
 <p align="center">
-    <a href="https://github.com/felixdorn/laravel-metadata">
         <h1 align="center">
             Laravel Metadata
         </h1>
-    </a>
     <p align="center">
         <img src="https://github.com/felixdorn/laravel-metadata/workflows/CI/badge.svg?branch=master" alt="CI" />
-       <img src="https://github.styleci.io/repos//shield?branch=master&style=flat" alt="StyleCI">
+       <img src="https://github.styleci.io/repos/278902830/shield?branch=master&style=flat" alt="StyleCI">
        <a href="https://codecov.io/gh/felixdorn/laravel-metadata">
          <img src="https://codecov.io/gh/felixdorn/laravel-metadata/branch/master/graph/badge.svg" />
        </a>
@@ -61,7 +59,9 @@ $model->meta
 
 $model->meta->has('something'); // returns false
 $model->meta->delete('this');
-$model->meta->reset(); // removes all the metadata, if you pass an array, it will be used to initialize the metadata
+$model->meta->reset(); 
+// removes all the metadata
+// if you pass an array, it will be used to initialize the new metadata
 
 $model->meta->prefixWith($model);
 
@@ -72,6 +72,8 @@ $model->meta->getModel(); // returns the parent model
 // useful as your metadata will often be shared across multiple objects// 
 // that might want a convenient want to retrieve the model
 ```
+
+The `Meta` class implements Countable, IteratorAggregate, ArrayAccess. And all __set, __get, __isset, __unset methods.
 
 
 

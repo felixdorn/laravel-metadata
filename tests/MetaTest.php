@@ -167,3 +167,84 @@ it('can get the underlying model', function () {
 
     assertSame($model, $model->meta->getModel());
 });
+
+it('can count metadata', function () {
+    $model = TestModel::create();
+
+    $model->meta->update([
+        'a' => 'b',
+        'c' => 'd'
+    ]);
+
+    assertCount(2, $model->meta);
+});
+
+it('can access metadata like an array', function () {
+    $model = TestModel::create();
+
+    $model->meta['a'] = 'b';
+
+    assertEquals('b', $model->meta->get('a'));
+    assertEquals('b', $model->meta['a']);
+
+
+    assertTrue($model->meta->has('a'));
+    assertTrue(isset($model->meta['a']));
+
+    unset($model->meta['a']);
+
+    assertFalse($model->meta->has('a'));
+    assertFalse(isset($model->meta['a']));
+});
+
+it('can access metadata like an object', function () {
+    $model = TestModel::create();
+
+    $model->meta->a = 'b';
+
+    assertEquals('b', $model->meta->get('a'));
+    assertEquals('b', $model->meta->a);
+
+
+    assertTrue($model->meta->has('a'));
+    assertTrue(isset($model->meta->a));
+
+    unset($model->meta->a);
+
+    assertFalse($model->meta->has('a'));
+    assertFalse(isset($model->meta->a));
+});
+
+it('can update metadata', function () {
+    $model = TestModel::create();
+    $model->meta->set('a', 'b');
+    $model->meta->set('c', 'd');
+
+    assertEquals([
+        'a' => 'b',
+        'c' => 'd'
+    ], $model->meta->all());
+
+    $model->meta->update([
+        'c' => 'e',
+        'f' => 'g'
+    ]);
+
+    assertEquals([
+        'a' => 'b',
+        'c' => 'e',
+        'f' => 'g'
+    ], $model->meta->all());
+});
+
+it('can return an iterator from the metadata', function () {
+    $model = TestModel::create();
+    $model->meta->set('a', 'b');
+
+    assertInstanceOf(ArrayIterator::class, $model->meta->getIterator());
+
+    foreach ($model->meta->getIterator() as $k => $v) {
+        assertEquals('a', $k);
+        assertEquals('b', $v);
+    }
+});
