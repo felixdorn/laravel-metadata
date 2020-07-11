@@ -9,7 +9,6 @@ use function PHPUnit\Framework\once;
 
 uses(TestCase::class);
 
-
 /**
  * @method static TestModel create(array $attributes = [])
  */
@@ -30,13 +29,11 @@ it('can get metadata with a prefix', function () {
     assertEquals('default', $meta->get('b', 'default'));
 });
 
-
 it('can get the meta class from a model', function () {
     $model = new TestModel();
 
     assertInstanceOf(Meta::class, $model->meta);
 });
-
 
 it('can save metadata', function () {
     /** @var TestModel|MockObject $model */
@@ -46,8 +43,8 @@ it('can save metadata', function () {
         ->method('update')
         ->with([
             'metadata' => json_encode([
-                'hello' => 'world'
-            ], JSON_THROW_ON_ERROR)
+                'hello' => 'world',
+            ], JSON_THROW_ON_ERROR),
         ])->willReturn(true);
 
     $model->meta->set('hello', 'world');
@@ -68,11 +65,10 @@ it('can prefix metadata', function () {
     $model->meta->prefix('current')
         ->set('hello', 'world');
 
-
     assertEquals([
         'current' => [
-            'hello' => 'world'
-        ]
+            'hello' => 'world',
+        ],
     ], $model->meta->all());
 });
 
@@ -83,14 +79,12 @@ it('can remove the prefix', function () {
         ->unprefix()
         ->set('hello', 'world');
 
-
     assertEquals([
         'current' => [
-            'hello' => 'world'
+            'hello' => 'world',
         ],
-        'hello' => 'world'
+        'hello' => 'world',
     ], $model->meta->all());
-
 });
 
 it('can use an object as a prefix', function () {
@@ -98,12 +92,11 @@ it('can use an object as a prefix', function () {
     $model->meta->prefixWith(TestModel::create())
         ->set('hello', 'world');
 
-
     assertEquals([
         // The model id
         2 => [
-            'hello' => 'world'
-        ]
+            'hello' => 'world',
+        ],
     ], $model->meta->all());
 });
 
@@ -124,8 +117,8 @@ it('can use an object with getIdentifier() as prefix', function () {
     assertEquals([
         // 1 is the model id
         'hello' => [
-            'hello' => 'world'
-        ]
+            'hello' => 'world',
+        ],
     ], $model->meta->all());
 });
 
@@ -151,14 +144,14 @@ it('can reset the metadata', function () {
     $model->meta->set('a', 'b');
 
     assertEquals([
-        'a' => 'b'
+        'a' => 'b',
     ], $model->meta->all());
 
     $model->meta->reset([
-        'c' => 'd'
+        'c' => 'd',
     ]);
     assertEquals([
-        'c' => 'd'
+        'c' => 'd',
     ], $model->meta->all());
 });
 

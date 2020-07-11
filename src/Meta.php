@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Felix\Metadata;
-
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -24,7 +22,7 @@ class Meta
      */
     public function get(string $key, $default = null)
     {
-        return Arr::get($this->all(), $this->prefix . $key, $default);
+        return Arr::get($this->all(), $this->prefix.$key, $default);
     }
 
     public function all(): array
@@ -40,7 +38,7 @@ class Meta
      */
     public function has($keys): bool
     {
-        return Arr::has($this->all(), array_map(fn($key) => $this->prefix . $key, Arr::wrap($keys)));
+        return Arr::has($this->all(), array_map(fn ($key) => $this->prefix.$key, Arr::wrap($keys)));
     }
 
     /**
@@ -51,12 +49,12 @@ class Meta
     public function set(string $key, $value): self
     {
         $_ = $this->all();
-        Arr::set($_, $this->prefix . $key, $value);
+        Arr::set($_, $this->prefix.$key, $value);
         $this->model->update([
             'metadata' => json_encode(
                 $_,
                 JSON_THROW_ON_ERROR
-            )
+            ),
         ]);
 
         return $this;
@@ -90,7 +88,7 @@ class Meta
     public function delete($keys): self
     {
         $_ = $this->all();
-        Arr::forget($_, array_map(fn($key) => $this->prefix . $key, Arr::wrap($keys)));
+        Arr::forget($_, array_map(fn ($key) => $this->prefix.$key, Arr::wrap($keys)));
 
         return $this->reset($_);
     }
@@ -98,7 +96,7 @@ class Meta
     public function reset(array $with = []): self
     {
         $this->model->update([
-            'metadata' => json_encode($with, JSON_THROW_ON_ERROR)
+            'metadata' => json_encode($with, JSON_THROW_ON_ERROR),
         ]);
 
         return $this;

@@ -1,20 +1,17 @@
 <?php
 
-
 namespace Felix\Metadata\Tests;
-
 
 use Felix\Metadata\MetaServiceProvider;
 use Orchestra\Testbench\TestCase as Base;
 
 class TestCase extends Base
 {
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     protected function getEnvironmentSetUp($app): void
