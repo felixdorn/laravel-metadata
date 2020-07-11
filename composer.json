@@ -1,0 +1,47 @@
+{
+    "name": "felixdorn/laravel-metadata",
+    "description": "Attach metadata to your models",
+    "homepage": "https://github.com/felixdorn/laravel-metadata",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Félix Dorn",
+            "email": "hi@felixdorn.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/database": "^7",
+        "illuminate/support": "^7"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^6.5",
+        "nunomaduro/collision": "v5.0.0-BETA1",
+        "orchestra/testbench": "^5.0",
+        "pestphp/pest": "^0.1.5",
+        "phpunit/phpunit": "^9.0",
+        "rector/rector": "^0.7.47"
+    },
+    "autoload": {
+        "psr-4": {
+            "Felix\\Metadata\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Felix\\Metadata\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Felix\\Metadata\\MetaServiceProvider"
+            ]
+        }
+    }
+}
