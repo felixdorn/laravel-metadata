@@ -21,16 +21,7 @@ class Meta implements Countable, IteratorAggregate, ArrayAccess
 
     public function prefixWith(object $model): self
     {
-        /**
-         * This might seems really opinionated and that's right, it's opinionated.
-         * Here's the why: I extracted this package from a big application where the meta was
-         * always prefixed by an object that has a getIdentifier method.
-         */
-        if (method_exists($model, 'getIdentifier')) {
-            return $this->prefix($model->getIdentifier());
-        }
-
-        return $this->prefix($model->id);
+        return $this->prefix($model->getKeyName());
     }
 
     public function prefix(string $prefix): self
